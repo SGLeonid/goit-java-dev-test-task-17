@@ -20,7 +20,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -58,8 +57,6 @@ public class SecurityConfiguration {
     ) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(encoder);
-        ProviderManager manager = new ProviderManager(provider);
-        manager.setEraseCredentialsAfterAuthentication(false);
-        return manager;
+        return new ProviderManager(provider);
     }
 }
